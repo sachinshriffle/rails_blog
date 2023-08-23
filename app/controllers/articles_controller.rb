@@ -4,10 +4,12 @@ class ArticlesController < ApplicationController
 	
 	def index
 		@articles = Article.all
+		render json: @articles
 	end
 
 	def show
 	  @article = Article.find(params[:id])
+	  render json: @article
 	end
 
 	def new
@@ -18,7 +20,8 @@ class ArticlesController < ApplicationController
 	  @article = Article.new(article_params)
 
 	  if @article.save
-	    redirect_to @article
+	  	flash[:notice] = "Thanks For The Article"
+	    render json: @article
 	  else
 	    render :new, status: :unprocessable_entity
 	  end
