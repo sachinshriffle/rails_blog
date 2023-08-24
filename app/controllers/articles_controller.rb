@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
 
-	http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
+	skip_before_action :verify_authenticity_token
+	# http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
 	
 	def index
 		@articles = Article.all
@@ -8,8 +9,12 @@ class ArticlesController < ApplicationController
 	end
 
 	def show
-	  @article = Article.find(params[:id])
-	  render json: @article
+	  @article = Article.find_by_id(params[:id])
+	  if @article
+	   render json: @article
+	 else
+	 	 render json: { message: "data not found" }
+	 end
 	end
 
 	def new
@@ -23,7 +28,7 @@ class ArticlesController < ApplicationController
 	  	flash[:notice] = "Thanks For The Article"
 	    render json: @article
 	  else
-	    render :new, status: :unprocessable_entity
+	    render json: {message:"not saved"}
 	  end
 	end
 
@@ -35,20 +40,20 @@ class ArticlesController < ApplicationController
 	   @article = Article.find(params[:id])
 
 	  if @article.update(article_params)
-	    redirect_to @article
+	    render json: @article
 	  else
-	    render :edit, status: :unprocessable_entity
+	    render json: {message:"not updated"}
 	  end
 	end
 
 	def destroy
     @article = Article.find(params[:id])
     @article.destroy
-    redirect_to root_path, status: :see_other
+    render json: {message:"destroy succesfully"}
   end
 
   private
   def article_params
-    params.require(:article).permit(:title, :body, :status)
+    params.require(:article).permit(:title, :body, :status, :user_id)
   end
 end

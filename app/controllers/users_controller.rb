@@ -1,5 +1,6 @@
-# require "prawn"
+require "prawn"
 class UsersController < ApplicationController
+	protect_from_forgery
 	include ActionController::Live
 	rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 	skip_before_action :verify_authenticity_token
@@ -32,8 +33,6 @@ class UsersController < ApplicationController
     if @user.save
       render json: @user
     else
-      # This line overrides the default rendering behavior, which
-      # would have been to render the "create" view.
       render json: {message: "not saved"}
     end
   end
@@ -50,11 +49,11 @@ class UsersController < ApplicationController
 
 	def show
 	  @user = User.find_by_id(params[:id])
-	  # if @user
+	  if @user
 	    render json: @user
-    # else
-    # 	render json: {message: "data not found"}
-    # end
+    else
+    	render json: {message: "data not found"}
+    end
 	end
 
 	def delete

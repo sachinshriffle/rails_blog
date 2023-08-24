@@ -15,5 +15,7 @@ Rails.application.routes.draw do
   # put "/users/:id", to: "users#update"
   # get "users/download_pdf/:id", to: "users#download_pdf"
   # get "/users/stream", to: "users#stream"
-  resources :users 
+  resources :users do
+  	resources :articles ,shallow: true
+  end
 end
