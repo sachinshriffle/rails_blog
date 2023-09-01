@@ -19,46 +19,46 @@ class UsersController < ApplicationController
   end
 
 	def new
-   @user = User.new
-   render json: @user
+   user = User.new
+   render json: user
   end
 
   def index
-    @user = User.all
-    render json: @user
+    user = User.all
+    render json: user
   end
 
-   def create
-    @user = User.new(user_info)
-    if @user.save
-      render json: @user
+  def create
+    user = User.new(user_info)
+    if user.save
+      render json: user
     else
       render json: {message: "not saved"}
     end
   end
 
   def update
-	  @user = User.find(params[:id])
+	  user = User.find(params[:id])
 
-	  if @user.update(user_info)
-	    render json: {data: @user, message:"update succesfully"}
+	  if user.update(user_info)
+	    render json: {data: user, message:"update succesfully"}
 	  else
 	    render json: {message:"error occured"}
 	  end
 	end
 
 	def show
-	  @user = User.find_by_id(params[:id])
-	  if @user
-	    render json: @user
+	  user = User.find_by_id(params[:id])
+	  if user
+	    render json: user
     else
     	render json: {message: "data not found"}
     end
 	end
 
 	def delete
-    @user = User.find(params[:id])
-    @user.destroy
+    user = User.find(params[:id])
+    user.destroy
     render json: {message: "delete a user"}
   end
 
