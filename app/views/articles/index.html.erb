@@ -1,16 +1,13 @@
-<h1>Articles</h1>
-
-Our blog has <%= Article.public_count %> articles and counting!
-
-<ul>
-  <% @articles.each do |article| %>
-    <% unless article.archived? %>
-      <li>
-        <%= link_to article.title, article %>
-      </li>
-    <% end %>
-  <% end %>
-</ul>
-
-<%= link_to "New Article", new_article_path %>
-	
+<h1>Chat</h1>
+<div class="chat">
+  <div class="messages">
+    <div class="message">
+      <span class="user">User:</span> Let's chat!
+    </div>
+  </div>
+  <form>
+    <label for="message">Message:</label>
+    <input type="text" id="message" placeholder="Enter your message..." />
+    <button type="submit">Send</button>
+  </form>
+</div>

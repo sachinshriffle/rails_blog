@@ -5,12 +5,23 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag 'https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js' %>
+    <%= javascript_include_tag 'https://media.twiliocdn.com/sdk/js/chat/v3.0/twilio-chat.min.js' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container">
+      <% if user_signed_in? %>
+          <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+        <% end %>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <%= yield %>
+     <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
+    </div>
   </body>
 </html>
